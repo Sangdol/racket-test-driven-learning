@@ -14,7 +14,7 @@
 
 (test-case
   "numbers"
-  (check = (expt 53 10) 174887470365513049)
+  (check = (expt 53 10) 174887470365513049)  ; = is only for numbers.
   (check = (sqrt -1) 0+1i))
 
 ; Numbers https://docs.racket-lang.org/guide/numbers.html
