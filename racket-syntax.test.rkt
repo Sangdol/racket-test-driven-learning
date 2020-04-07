@@ -64,7 +64,10 @@
   (check-true (cond [(= 1 1) #t]
                     [(odd? 1) #f]
                     [else 'else]))
-  )
+
+  ; using functions that return more than just the truth
+  (check-equal? (member 4 (list 1 4 3)) (list 4 3))
+  (check-true (if (member 4 (list 1 4 3)) #t #f)))
 
 (test-case
   "and or"
@@ -88,3 +91,17 @@
   (unless (even? 1)
     (set! is-it-odd #t))
   (check-true is-it-odd))
+
+(test-case
+  "eq and equal (identity and equality)"
+  (struct person (name))
+  (define p1 (person 'Sang))
+  (define p2 (person 'Sang))
+  (check-false (equal? p1 p2))  ; opaque
+  (check-false (eq? p1 p2))
+
+  (struct naked (name) #:transparent)
+  (define n1 (naked 'n))
+  (define n2 (naked 'n))
+  (check-true (equal? n1 n2))
+  (check-false (eq? n1 n2)))
