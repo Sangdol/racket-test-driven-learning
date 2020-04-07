@@ -65,3 +65,26 @@
                     [(odd? 1) #f]
                     [else 'else]))
   )
+
+(test-case
+  "and or"
+  ; short-circuit
+  (define is-it-even #f)
+  (or (odd? 2) (set! is-it-even #t))
+  (check-true is-it-even)
+
+  (set! is-it-even #f)
+  (and (even? 2) (set! is-it-even #t))
+  (check-true is-it-even))
+
+(test-case
+  "when / unless"
+  (define is-it-even #f)
+  (when (even? 2)  ; 'when' is 'if' without else
+    (set! is-it-even #t))
+  (check-true is-it-even)
+
+  (define is-it-odd #f)
+  (unless (even? 1)
+    (set! is-it-odd #t))
+  (check-true is-it-odd))
