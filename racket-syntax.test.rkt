@@ -42,3 +42,26 @@
   (define a 1)
   (check-equal? (add1 a) 2)
   (check-equal? a 1))  ; add1 didn't change a.
+
+(test-case
+  "if and cond - only #f is #f"
+  (check-true (if (= (+ 1 2) 3)
+                  #t
+                  #f))
+  (check-true (if 1
+                #t
+                #f))
+  (check-true (if 0
+                #t
+                #f))
+  (check-true (if `()
+                #t
+                #f))
+  (check-false (if #f
+                #t
+                #f))
+
+  (check-true (cond [(= 1 1) #t]
+                    [(odd? 1) #f]
+                    [else 'else]))
+  )
