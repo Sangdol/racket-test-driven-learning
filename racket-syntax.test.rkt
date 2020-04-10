@@ -9,8 +9,10 @@
 
 (require rackunit)
 
+; module level definition
 (test-case
   "define variable"
+  ; local definition
   (define a 1)
   (check-equal? a 1))
 
