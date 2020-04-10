@@ -57,3 +57,10 @@
   (define n (naked 'n 0))
   (check-true (naked? n))
   (check-true (struct? n)))
+
+(test-case
+  "mutable structure"
+  (struct mutant (name) #:mutable)
+  (define sang (mutant 'sang))
+  (set-mutant-name! sang 'Sanghyun)
+  (check-equal? (mutant-name sang) 'Sanghyun))
