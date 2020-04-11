@@ -169,3 +169,11 @@
                   (list k n))
                 '((0 0) (1 1) (2 2))))
 
+; https://docs.racket-lang.org/reference/quasiquote.html
+(test-case
+  "Quasiquoting - backtick `"
+  (check-equal? (quasiquote (0 1)) `(0 1))
+  (check-equal? `(0 1) '(0 1))
+  (check-equal? `(0 ,(+ 1 1) 4) '(0 2 4))  ; ',': unquote
+  (check-equal? `(0 ,@(list 1 2) 3) '(0 1 2 3))  ; ',@': unquote-slicing
+  )
