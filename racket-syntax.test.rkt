@@ -143,5 +143,29 @@
                   (+ (sqr i) sqrs))
                 (foldl (lambda (i sqrs) (+ (sqr i) sqrs))
                        0
-                       '(1 2))))
+                       '(1 2)))
+  (check-equal? (for/list ([i '(1 2 3)]
+                           #:when (odd? i))
+                  i)
+                '(1 3))
+
+  ; nested loops
+  (check-equal? (for*/list ([i '(1 2)]
+                            [j '(3 4)])
+                  (+ i j))
+                '(4 5 5 6))
+  (check-equal? (for/list ([i '(1 2)])
+                  (for/list ([j '(3 4)])
+                    (+ i j)))
+                '((4 5) (5 6)))
+
+  (check-equal? (for*/list ([k '((1 2) (3 4))]
+                            [n k])
+                  n)
+                '(1 2 3 4))
+
+  (check-equal? (for/list ([k (in-naturals)]
+                           [n (in-range 3)])
+                  (list k n))
+                '((0 0) (1 1) (2 2))))
 
