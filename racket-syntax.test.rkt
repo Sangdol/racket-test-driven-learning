@@ -1,4 +1,4 @@
-#lang racket/base
+#lang racket
 
 ; single line comment
 
@@ -24,7 +24,14 @@
   ; https://docs.racket-lang.org/guide/syntax-overview.html
   (define (bake flavor)
     string-append flavor "jello")  ; they are separate expressions without ()
-  (check-equal? (bake "ignore") "jello"))
+  (check-equal? (bake "ignore") "jello")
+
+  ; define multiple values conditionally
+  (define-values (x y)
+    (if (string=? "a" "a")
+      (values 1 2)
+      (values 3 4)))
+  (check-equal? (list x y) (list 1 2)))
 
 (test-case
   "define function"
@@ -122,4 +129,19 @@
 (test-case
   "no functional differences between (), [], and {}"
   (check-pred = (+ 1 1) [+ 1 1]))
+
+(test-case
+  "for loop"
+  (check-equal? (for/list ([i '(1 2 3)]) (/ 1 i))
+                (map (lambda (x) (/ 1 x)) '(1 2 3)))
+
+  ; (for/fold ([accum-id init-expr] ...)
+  ;           (clause ...)
+  ;   body ...+)
+  (check-equal? (for/fold ([sqrs 0])
+                          ([i '(1 2)])
+                  (+ (sqr i) sqrs))
+                (foldl (lambda (i sqrs) (+ (sqr i) sqrs))
+                       0
+                       '(1 2))))
 
