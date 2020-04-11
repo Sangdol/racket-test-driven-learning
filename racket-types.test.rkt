@@ -34,7 +34,9 @@
   (check-equal? (cons 'chicken empty) '(chicken))
   (check-equal? (cons 'chicken '()) '(chicken))
   ; consing
-  (check-equal? (cons 'a '(b c)) '(a b c)))
+  (check-equal? (cons 'a '(b c)) '(a b c))
+  (check-equal? (cons 1 '()) '(1))
+  (check-equal? (cons 1 (cons 2 3)) '(1 2 . 3)))
 
 (test-case
   "list"
