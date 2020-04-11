@@ -14,7 +14,17 @@
   "define variable"
   ; local definition
   (define a 1)
-  (check-equal? a 1))
+  (check-equal? a 1)
+
+  ; Form
+  ; ( define ‹id› ‹expr› )
+  ; ( define ( ‹id› ‹id›* ) ‹expr›+ )
+  ;
+  ; Note that multiple expressions are allowed in the second case.
+  ; https://docs.racket-lang.org/guide/syntax-overview.html
+  (define (bake flavor)
+    string-append flavor "jello")  ; they are separate expressions without ()
+  (check-equal? (bake "ignore") "jello"))
 
 (test-case
   "define function"
@@ -107,3 +117,9 @@
   (define n2 (naked 'n))
   (check-true (equal? n1 n2))
   (check-false (eq? n1 n2)))
+
+; https://stackoverflow.com/questions/41417892/what-is-the-difference-between-and-brackets-in-racket-lisp-programming
+(test-case
+  "no functional differences between (), [], and {}"
+  (check-pred = (+ 1 1) [+ 1 1]))
+
