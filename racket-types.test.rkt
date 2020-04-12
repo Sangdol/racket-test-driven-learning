@@ -36,7 +36,19 @@
   ; consing
   (check-equal? (cons 'a '(b c)) '(a b c))
   (check-equal? (cons 1 '()) '(1))
-  (check-equal? (cons 1 (cons 2 3)) '(1 2 . 3)))
+  (check-equal? (cons 1 (cons 2 3)) '(1 2 . 3))
+
+  (check-false (list? (cons 1 2)))
+  (check-true (list? (cons 1 (cons 2 empty)))))
+
+(test-case
+  "null?"
+  ; true for an empty list and false for everything else
+  (check-true (null? empty))
+  (check-true (null? '()))
+  (check-false (null? #f))
+  (check-false (null? 0))
+  (check-false (null? "")))
 
 (test-case
   "list"
