@@ -6,14 +6,14 @@
   (and (not (null? x)) (not (pair? x))))
 
 (test-case
-  "Ch 2. Do it, do it again, and again, and again..."
+  "Ch2. Do it, do it again, and again, and again..."
   #|
   This should also work.
 
   (define (lat? l)
     (cond [(null? l) #t]
           [(atom? (car l)) (lat? (cdr l))]
-          [else #f])))
+          [else #f]))
   |#
   (define lat?
     (lambda (l)
@@ -141,7 +141,7 @@
   (check-equal? (multisubst 'a 'o '(b c o o)) '(b c a a)))
 
 (test-case
-  "4. Numbers Games"
+  "Ch4. Numbers Games"
   (define +
     (lambda (n m)
       (cond [(zero? m) n]
