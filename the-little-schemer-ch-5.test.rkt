@@ -1,4 +1,4 @@
-#lang racket
+#lang errortrace racket
 
 (require rackunit)
 
@@ -135,7 +135,39 @@
   (check-false (eqlist? '(a a) '(b a)))
   (check-false (eqlist? '(a a) '(a (a))))
   (check-false (eqlist? '(a (a b)) '(a (a c))))
-  (check-true (eqan? 'a 'a))
   (check-true (eqlist? '() '()))
   (check-true (eqlist? '(a) '(a)))
-  (check-true (eqlist? '(a (a b)) '(a (a b)))))
+  (check-true (eqlist? '(a (a b)) '(a (a b))))
+
+  (define my-equal?
+    (lambda (s1 s2)
+      (cond [(and (atom? s1) (atom? s2)) (eqan? s1 s2)]
+            [(or (atom? s1) (atom? s2)) #f]
+            [else (eqlist? s1 s2)])))
+
+  (check-false (my-equal? 'a 'b))
+  (check-false (my-equal? '(a) '(b)))
+  (check-false (my-equal? '(a a) '(b a)))
+  (check-false (my-equal? '(a a) '(b a)))
+  (check-false (my-equal? '(a a) '(a (a))))
+  (check-false (my-equal? '(a (a b)) '(a (a c))))
+  (check-true (my-equal? 'a 'a))
+  (check-true (my-equal? '() '()))
+  (check-true (my-equal? '(a) '(a)))
+  (check-true (my-equal? '(a (a b)) '(a (a b))))
+
+  (define eqlist?.v2
+    (lambda (l1 l2)
+      (cond [(and (null? l1) (null? l2)) #t]
+            [(or (null? l1) (null? l2)) #f]
+            [else (and (my-equal? (car l1) (car l2))
+                       (eqlist?.v2 (cdr l1) (cdr l2)))])))
+
+  (check-false (eqlist?.v2 '(a) '(b)))
+  (check-false (eqlist?.v2 '(a a) '(b a)))
+  (check-false (eqlist?.v2 '(a a) '(b a)))
+  (check-false (eqlist?.v2 '(a a) '(a (a))))
+  (check-false (eqlist?.v2 '(a (a b)) '(a (a c))))
+  (check-true (eqlist?.v2 '() '()))
+  (check-true (eqlist?.v2 '(a) '(a)))
+  (check-true (eqlist?.v2 '(a (a b)) '(a (a b)))))
