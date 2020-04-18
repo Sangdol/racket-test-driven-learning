@@ -328,3 +328,4 @@
   (check-equal? (rempick 1 '(a b)) '(b))
   (check-equal? (rempick 2 '(a b c)) '(a c)))
 
+
