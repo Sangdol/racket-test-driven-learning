@@ -229,7 +229,14 @@
 
   (define fullfun?
     (lambda (fun)
-      (and (set? (seconds fun)))))
+      (set? (seconds fun))))
+
+  (check-false (fullfun? '((a b) (e b))))
+  (check-true (fullfun? '((a b) (e c))))
+
+  (define one-to-one
+    (lambda (fun)
+      (fun? (revrel fun))))
 
   (check-false (fullfun? '((a b) (e b))))
   (check-true (fullfun? '((a b) (e c)))))
