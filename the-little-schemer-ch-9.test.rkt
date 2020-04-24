@@ -112,4 +112,34 @@
   (check-equal? (C 3) 1)
   (check-equal? (C 4) 1)
   (check-equal? (C 5) 1)
-  (check-equal? (C 1000) 1))
+  (check-equal? (C 1000) 1)
+
+  ; the most partial function
+  (define eternity
+    (lambda (x)
+      (eternity x)))
+
+  ; mk-length: make length
+  ; this can only count until 1.
+  (check-equal? (((lambda (mk-length)
+                     (mk-length (mk-length eternity)))
+                  (lambda (e)
+                    (lambda (l)
+                      (cond [(null? l) 0]
+                            [else (add1 (e (cdr l)))])))) '(0))
+                1)
+
+  ; Y combinator
+  (define Y
+    (lambda (le)
+      ((lambda (f) (f f))
+       (lambda (f)
+         (le (lambda (x) ((f f) x)))))))
+
+  (check-equal?
+    ((Y (lambda (length)
+          (lambda (l)
+            (cond [(null? l) 0]
+                  [else (add1 (length (cdr l)))])))) '(1 1 1))
+    3))
+
