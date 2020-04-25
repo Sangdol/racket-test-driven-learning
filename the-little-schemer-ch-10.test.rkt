@@ -92,10 +92,6 @@
             [(non-primitive? fun)
              (apply-closure (second fun) vals)])))
 
-  (define value
-    (lambda (e)
-      (meaning e '())))
-
   (define meaning
     (lambda (e table)
       ((expression-to-action e) e table)))
@@ -111,8 +107,6 @@
   (check-equal? (*const 1 '()) 1)
   (check-equal? (*const #t '()) #t)
   (check-equal? (*const 'car '()) '(primitive car))
-
-  (check-equal? (value 'car) '(primitive car))
 
   (define *quote
     (lambda (e table)
@@ -293,5 +287,12 @@
   (check-equal? (question-of '((null? l) l)) '(null? l))
   (check-equal? (answer-of '((null? l) l)) 'l)
   (check-equal? (meaning '(null? '()) '()) #t)
-  (check-equal? (evcon '(((null? '()) 1)) '()) 1))
+  (check-equal? (evcon '(((null? '()) 1)) '()) 1)
+
+  (define value
+    (lambda (e)
+      (meaning e '())))
+
+  (check-equal? (value 'car) '(primitive car))
+  (check-equal? (value '(sub1 1)) 0))
 
