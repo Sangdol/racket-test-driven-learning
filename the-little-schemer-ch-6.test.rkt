@@ -87,6 +87,7 @@
       (car aexp)))
 
   ; We can change this to the first version if we change the helper functions.
+  ; from Ch9: The function value approximates `eval`.
   (define value.v3
     (lambda (nexp)
       (cond [(atom? nexp) nexp]
